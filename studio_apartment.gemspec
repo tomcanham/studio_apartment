@@ -16,4 +16,5 @@ Gem::Specification.new do |s|
   s.license       = 'MIT'
   s.platform    = Gem::Platform::RUBY
   s.require_paths = ["lib"]
+  s.add_runtime_dependency "request_store"
 end

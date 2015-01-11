@@ -33,24 +33,22 @@ class ApplicationController < ActionController::Base
   ...
 
   helper_method :current_account
-  set_tenant_with :get_account
+  before_action :set_account
 
   private
 
-  def get_account
+  def set_account
     # obviously, this is a contrived example; don't do this!
-    Account.find(params[:account]) if params[:account].present?
+    StudioApartment.current_tenant = Account.find(params[:account]) if params[:account].present?
   end
 
   def  current_account
-    current_tenant
+    StudioApartment.current_tenant
   end
 end
 ```
 
-Now, when your controller actions access a tenated model, the default scope will be set to the "correctly tenanted" subset (per account, in the above example). Model.all will give Model.all.where(account_id: current_account_id). And if no tenant is set, you'll get Model.none.
-
-Finally, to skip tenanting, just use Model.unscoped.
+Now, when your controller actions access a tenated model, the default scope will be set to the "correctly tenanted" subset (per account, in the above example). Tenanting is reset after every request to reduce the risk of unintentionally "sticky" tenanting. To skip tenanting for this request, just set the tenant to nil.
 
 # Todo
 

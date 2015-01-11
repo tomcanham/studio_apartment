@@ -3,6 +3,8 @@ Lightweight multitenanting library
 
 Alternative to the apartment gem, which is heavy and makes a lot of assumptions.
 
+The primary goal of this is a lightweight way to "set it and forget it" for multitenanted applications. We should be able to use a single schema (and not rely upon Postgres magic) with proper relations. But we shouldn't have to put Model.scoped_by(tenant) on every single model use in the controllers.
+
 To install: 
 
 Add 
@@ -45,3 +47,7 @@ class ApplicationController < ActionController::Base
   end
 end
 ```
+
+Now, when your controller actions access a tenated model, the default scope will be set to the "correctly tenanted" subset (per account, in the above example). Model.all will give Model.all.where(account_id: current_account_id). And if no tenant is set, you'll get Model.none.
+
+Finally, to skip tenanting, just use Model.unscoped.

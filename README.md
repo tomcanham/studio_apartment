@@ -51,3 +51,7 @@ end
 Now, when your controller actions access a tenated model, the default scope will be set to the "correctly tenanted" subset (per account, in the above example). Model.all will give Model.all.where(account_id: current_account_id). And if no tenant is set, you'll get Model.none.
 
 Finally, to skip tenanting, just use Model.unscoped.
+
+# Todo
+
+TEST!

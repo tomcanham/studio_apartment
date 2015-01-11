@@ -1,21 +1,26 @@
 require 'active_support/concern'
+require 'studio_apartment/version'
 
 module StudioApartment
+  def self.current_tenant
+    Thread.current[:tenant]
+  end
+
+  def self.current_tenant=(new_tenant)
+    Thread.current[:tenant] = new_tenant
+  end
+
   module Model
     extend ActiveSupport::Concern
 
     module ClassMethods
-      def current_tenant
-        Thread.current[:tenant]
-      end
-
       def acts_as_tenant(association_name)
         self.class_eval do
           default_scope do 
-            if current_tenant.present?
-              self.where(association_name => current_tenant)
+            if StudioApartment.current_tenant.present?
+              self.where(association_name => StudioApartment.current_tenant)
             else
-              self.none
+              self.all
             end
           end
         end
@@ -26,23 +31,15 @@ module StudioApartment
   module Controller
     extend ActiveSupport::Concern
 
-    def current_tenant
-      Thread.current[:tenant]
-    end
-
-    def current_tenant=(new_tenant)
-      Thread.current[:tenant] = new_tenant
-    end
-
     module ClassMethods
-      def set_tenant_with(symbol)
-        self.class_exec(symbol) do |symbol|
+      def set_tenant_with(tenant_setter)
+        self.class_exec(tenant_setter) do |tenant_setter|
           prepend_around_action do |controller, action|
             begin
-              self.current_tenant = self.send(symbol)
+              StudioApartment.current_tenant = controller.send(tenant_setter)
               action.call     
             ensure  
-              self.current_tenant = nil
+              StudioApartment.current_tenant = nil
             end
           end
         end

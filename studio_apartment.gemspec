@@ -1,6 +1,10 @@
+# -*- encoding: utf-8 -*-
+$:.push File.expand_path("../lib", __FILE__)
+require 'studio_apartment/version'
+
 Gem::Specification.new do |s|
   s.name        = 'studio_apartment'
-  s.version     = '0.0.0'
+  s.version     = StudioApartment::VERSION.dup
   s.date        = '2015-01-11'
   s.summary     = "Lightweight multitenanting"
   s.description = "A lightweight multitenanting library that makes few assumptions about your code"
@@ -10,4 +14,6 @@ Gem::Specification.new do |s|
   s.homepage    =
     'http://rubygems.org/gems/studio_apartment'
   s.license       = 'MIT'
+  s.platform    = Gem::Platform::RUBY
+  s.require_paths = ["lib"]
 end

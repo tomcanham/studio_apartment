@@ -50,6 +50,12 @@ end
 
 Now, when your controller actions access a tenated model, the default scope will be set to the "correctly tenanted" subset (per account, in the above example). Tenanting is reset after every request to reduce the risk of unintentionally "sticky" tenanting. To skip tenanting for this request, just set the tenant to nil.
 
-# Todo
+## Contributing
 
-TEST!
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
+
+Don't forget to run the tests with `rake`.

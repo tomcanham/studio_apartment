@@ -10,7 +10,7 @@ To install:
 Add 
 
 ```ruby
-gem 'studio_apartment'
+gem 'studio_apartment', :github => 'tomcanham/studio_apartment'
 ```
 
 to your Gemfile.

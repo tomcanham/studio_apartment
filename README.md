@@ -13,7 +13,7 @@ Add
 gem 'studio_apartment', :github => 'tomcanham/studio_apartment'
 ```
 
-to your Gemfile.
+to your Gemfile, and bundle install.
 
 You will need to mark up your models with "acts_as_tenant" on a relationship:
 
